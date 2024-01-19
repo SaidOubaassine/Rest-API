@@ -1,6 +1,8 @@
 package learn.spring.api.controllers;
 
+import learn.spring.api.domain.dto.AuthorDto;
 import learn.spring.api.domain.dto.BookDto;
+import learn.spring.api.domain.entities.AuthorEntity;
 import learn.spring.api.domain.entities.BookEntity;
 import learn.spring.api.mappers.Mapper;
 import learn.spring.api.mappers.impl.BookMapperImpl;
@@ -24,13 +26,14 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PutMapping(path = "/books/{isbn}")
+   /* @PutMapping(path = "/books/{isbn}")
     public ResponseEntity<BookDto> createBook(@PathVariable String isbn, @RequestBody BookDto bookDto) {
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
         BookEntity savedBookEntity = bookService.createBook(isbn, bookEntity);
         BookDto savedUpdatedBookDto = bookMapper.mapTo(savedBookEntity);
         return new ResponseEntity(savedUpdatedBookDto, HttpStatus.CREATED);
     }
+    */
     @GetMapping(path = "/books")
     public List<BookDto> listAuthors(){
         List<BookEntity> books = bookService.findAll();
@@ -46,4 +49,18 @@ public class BookController {
             return new ResponseEntity<>(bookDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @PutMapping(path = "/books/{isbn}")
+    public ResponseEntity<BookDto> createUpdateBook(@PathVariable String isbn, @RequestBody BookDto bookDto) {
+        BookEntity bookEntity = bookMapper.mapFrom(bookDto);
+        boolean bookExists = bookService.isExists(isbn);
+        BookEntity savedBookEntity = bookService.createUpdateBook(isbn, bookEntity);
+        BookDto savedUpdatedBookDto = bookMapper.mapTo(savedBookEntity);
+
+        if(bookExists){
+            return new ResponseEntity(savedUpdatedBookDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(savedUpdatedBookDto, HttpStatus.CREATED);
+        }
+    }
+
 }

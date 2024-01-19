@@ -72,10 +72,11 @@ public class BooksControllerIntegrationTests {
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }
+
     @Test
     public void testThatListBooksReturnsBook() throws Exception {
         BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
-        bookService.createBook(testBookEntityA.getIsbn(), testBookEntityA);
+        bookService.createUpdateBook(testBookEntityA.getIsbn(), testBookEntityA);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books")
@@ -89,7 +90,7 @@ public class BooksControllerIntegrationTests {
     @Test
     public void testThatGetBookReturnsHttpStatus200OkWhenBookExists() throws Exception {
         BookEntity testBookEntityA = TestDataUtil.createTestBookEntityA(null);
-        bookService.createBook(testBookEntityA.getIsbn(), testBookEntityA);
+        bookService.createUpdateBook(testBookEntityA.getIsbn(), testBookEntityA);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books/" + testBookEntityA.getIsbn())
