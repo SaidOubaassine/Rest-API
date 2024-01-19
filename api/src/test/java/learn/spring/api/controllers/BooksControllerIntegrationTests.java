@@ -110,4 +110,11 @@ public class BooksControllerIntegrationTests {
                 MockMvcResultMatchers.status().isNotFound()
         );
     }
+    @Test
+    public void testThatDeleteNonExistingBookReturnsHttpStatus204ForNonExistingBook() throws Exception{
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/authors/199")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }

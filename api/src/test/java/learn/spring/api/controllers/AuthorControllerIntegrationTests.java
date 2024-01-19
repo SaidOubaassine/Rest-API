@@ -165,4 +165,11 @@ public class AuthorControllerIntegrationTests {
                 MockMvcResultMatchers.jsonPath("$.age").value(authorDto.getAge())
         );
     }
+    @Test
+    public void testThatDeleteNonExistingAuthorReturnsHttpStatus204ForNonExistingAuthor() throws Exception{
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/authors/199")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
