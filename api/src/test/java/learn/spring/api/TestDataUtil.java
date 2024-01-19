@@ -1,6 +1,7 @@
 package learn.spring.api;
 
 import learn.spring.api.domain.dto.AuthorDto;
+import learn.spring.api.domain.dto.BookDto;
 import learn.spring.api.domain.entities.AuthorEntity;
 import learn.spring.api.domain.entities.BookEntity;
 
@@ -48,6 +49,14 @@ public final class TestDataUtil {
                 .build();
     }
 
+    public static BookDto createTestBookDtoA(final AuthorDto authorDto) {
+        return BookDto.builder()
+                .isbn("978-1-2345-6789-0")
+                .title("The Shadow in the Attic")
+                .author(authorDto)
+                .build();
+    }
+
     public static BookEntity createTestBookB(final AuthorEntity authorEntity) {
         return BookEntity.builder()
                 .isbn("978-1-2345-6789-1")
@@ -64,4 +73,3 @@ public final class TestDataUtil {
                 .build();
     }
 }
-
