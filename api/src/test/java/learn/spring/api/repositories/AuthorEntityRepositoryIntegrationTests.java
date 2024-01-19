@@ -95,6 +95,5 @@ public class AuthorEntityRepositoryIntegrationTests {
         Iterable<AuthorEntity> result = underTest.findAuthorsWithAgeGreaterThan(50);
         assertThat(result).containsExactly(testAuthorAEntity);
     }
-
-
 }
+
