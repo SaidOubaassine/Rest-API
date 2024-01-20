@@ -3,6 +3,8 @@ package learn.spring.api.services.impl;
 import learn.spring.api.domain.entities.BookEntity;
 import learn.spring.api.respositories.BookRepository;
 import learn.spring.api.services.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +27,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookEntity> findAll() {
-        return StreamSupport.stream(bookRepository
-                .findAll()
-                .spliterator(), false)
-                .collect(Collectors.toList());
+    public BookEntity createBook(BookEntity bookEntity) {
+        return bookRepository.save(bookEntity);
     }
+
+    @Override
+    public Page<BookEntity> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
+    }
+
 
     @Override
     public Optional<BookEntity> findOne(String isbn) {
